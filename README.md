@@ -206,14 +206,6 @@ POST /api/chat/
 
 ---
 
-## 🖥 Screenshots
-
-> Add your screenshots here after deployment!
-> `![Homepage](screenshots/homepage.png)`
-> `![Chat](screenshots/chat.png)`
-
----
-
 ## 🚀 Running the Project
 
 Every time you want to launch MediCheck, open **two terminal tabs**:
@@ -246,15 +238,7 @@ Then open **`http://localhost:3000`** in your browser.
 
 ---
 
-## 📄 License
-
-This project is licensed under the MIT License.
-
----
-
 <div align="center">
-
-Built with ❤️ using React • Django • Pinecone • Hugging Face
 
 ⚕️ **MediCheck** — For educational purposes only • Not a substitute for professional medical advice
 
