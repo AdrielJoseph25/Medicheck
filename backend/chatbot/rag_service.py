@@ -58,7 +58,8 @@ def build_response(query, documents):
         {
             'number': i + 1,
             'source': doc['source'],
-            'relevance_score': doc['score']
+            'relevance_score': doc['score'],
+            'text': doc['text']
         }
         for i, doc in enumerate(documents)
     ]

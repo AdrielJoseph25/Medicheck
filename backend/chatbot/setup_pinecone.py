@@ -17,8 +17,32 @@ pc = Pinecone(api_key=settings.PINECONE_API_KEY)
 INDEX_NAME = settings.PINECONE_INDEX_NAME
 DIMENSION = 384  # all-MiniLM-L6-v2 produces 384-dimensional vectors
 
-# Create index if it doesn't exist
-if INDEX_NAME not in [idx.name for idx in pc.list_indexes()]:
+# Create index if it doesn't exist or has wrong dimension
+import time
+existing_indexes = pc.list_indexes()
+existing_index_names = [idx.name for idx in existing_indexes]
+
+if INDEX_NAME in existing_index_names:
+    desc = pc.describe_index(INDEX_NAME)
+    if desc.dimension != DIMENSION:
+        print(f"Index '{INDEX_NAME}' exists but has dimension {desc.dimension} (expected {DIMENSION}). Recreating index...")
+        pc.delete_index(INDEX_NAME)
+        # Wait for deletion to complete
+        print("Waiting for index deletion to complete...")
+        while INDEX_NAME in [idx.name for idx in pc.list_indexes()]:
+            time.sleep(1)
+        
+        print("Creating index with correct dimension...")
+        pc.create_index(
+            name=INDEX_NAME,
+            dimension=DIMENSION,
+            metric='cosine',
+            spec=ServerlessSpec(cloud='aws', region='us-east-1')
+        )
+        print("Index created!")
+    else:
+        print(f"Index '{INDEX_NAME}' already exists with the correct dimension.")
+else:
     print(f"Creating index '{INDEX_NAME}'...")
     pc.create_index(
         name=INDEX_NAME,
@@ -27,8 +51,7 @@ if INDEX_NAME not in [idx.name for idx in pc.list_indexes()]:
         spec=ServerlessSpec(cloud='aws', region='us-east-1')
     )
     print("Index created!")
-else:
-    print(f"Index '{INDEX_NAME}' already exists.")
+
 
 index = pc.Index(INDEX_NAME)
 

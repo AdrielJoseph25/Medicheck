@@ -76,9 +76,12 @@ USE_TZ = True
 STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Allow React (running on port 3000) to talk to Django (port 8000)
+# Allow React (running on port 3000/5173) to talk to Django (port 8000)
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
+    "http://localhost:5173",
+    "http://127.0.0.1:3000",
+    "http://127.0.0.1:5173",
 ]
 
 # Pinecone & HuggingFace config loaded from .env

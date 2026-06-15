@@ -88,13 +88,14 @@ medicheck/
 │   ├── .gitignore
 │   └── manage.py
 └── frontend/
-    └── src/
-        ├── App.js               # Main chat interface
-        ├── HomePage.js          # Landing page
-        ├── Message.js           # Chat bubbles with citations & disclaimers
-        ├── Disclaimer.js        # Responsible AI modal
-        ├── api.js               # Axios API service
-        └── index.css            # Global dark theme styles
+    ├── src/
+    │   ├── App.jsx              # Main chat interface, including suggestions, citations, and modals
+    │   ├── main.jsx             # React entry point
+    │   ├── App.css              # Reset styles (cleared)
+    │   └── index.css            # Premium custom vanilla CSS styles
+    ├── index.html               # Entry HTML template with Google Fonts
+    ├── package.json             # Frontend dependency configuration
+    └── vite.config.js           # Vite configuration
 ```
 
 ---
@@ -151,9 +152,9 @@ Backend runs at `http://localhost:8000`
 ```bash
 cd ../frontend
 npm install
-npm start
+npm run dev
 ```
-Frontend runs at `http://localhost:3000`
+Frontend runs at `http://localhost:5173`
 
 ---
 
@@ -181,7 +182,8 @@ POST /api/chat/
     {
       "number": 1,
       "source": "Mayo Clinic - Headache",
-      "relevance_score": 0.89
+      "relevance_score": 0.89,
+      "text": "Headaches are one of the most common health complaints..."
     }
   ],
   "disclaimer": "⚠️ MEDICAL DISCLAIMER: This information is for educational purposes only...",
@@ -220,10 +222,10 @@ python3 manage.py runserver
 **Tab 2 — React Frontend:**
 ```bash
 cd medicheck/frontend
-npm start
+npm run dev
 ```
 
-Then open **`http://localhost:3000`** in your browser.
+Then open **`http://localhost:5173`** in your browser.
 
 ---
 
